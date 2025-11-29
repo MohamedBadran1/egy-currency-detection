@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Results - Egyptian Currency Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇪🇬 Detection Results</h1>
+            <a href="{{ url_for('index') }}" class="btn-back">← Upload Another Image</a>
+        </header>
+
+        <div class="results-container">
+            <!-- Total Amount Card -->
+            <div class="total-card">
+                <h2>Total Amount</h2>
+                <div class="total-amount">{{ total_amount }} EGP</div>
+                <p class="note-count">{{ num_notes }} banknote{{ 's' if num_notes != 1 else '' }} detected</p>
+            </div>
+
+            <!-- Denomination Breakdown -->
+            <div class="breakdown-card">
+                <h3>💵 Denomination Breakdown</h3>
+                <div class="breakdown-list">
+                    {% for value, count in denomination_counts.items()|sort(reverse=True) %}
+                    <div class="breakdown-item">
+                        <span class="denom-value">{{ value }} EGP</span>
+                        <span class="denom-count">×{{ count }}</span>
+                        <span class="denom-total">= {{ value * count }} EGP</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Detected Image -->
+            <div class="image-comparison">
+                <div class="image-card">
+                    <h3>Original Image</h3>
+                    <img src="{{ url_for('static', filename='uploads/' + original_image) }}" alt="Original">
+                </div>
+                <div class="image-card">
+                    <h3>Detected Banknotes</h3>
+                    <img src="{{ url_for('static', filename='uploads/' + result_image) }}" alt="Detected">
+                </div>
+            </div>
+
+            <!-- Detection Details -->
+            <div class="details-card">
+                <h3>📋 Detection Details</h3>
+                <div class="details-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Banknote</th>
+                                <th>Value</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detection in detections %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ detection.class }}</td>
+                                <td>{{ detection.value }} EGP</td>
+                                <td>
+                                    <span class="confidence-badge">
+                                        {{ (detection.confidence * 100)|round(1) }}%
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="{{ url_for('index') }}" class="btn-primary">
+                    Upload Another Image
+                </a>
+                <button onclick="window.print()" class="btn-secondary">
+                    🖨️ Print Results
+                </button>
+            </div>
+        </div>
+
+        <footer>
+            <p>Built with YOLOv8 and Flask | Egyptian Currency Detection System</p>
+        </footer>
+    </div>
+</body>
+</html>

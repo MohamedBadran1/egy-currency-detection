@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+currency_env/
+nti_proj/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Flask
+instance/
+.webassets-cache
+
+# Uploads folder (contains user uploaded images)
+static/uploads/*
+!static/uploads/.gitkeep
+
+# Training runs and results
+runs/
+wandb/
+
+# Model checkpoints (optional - comment out if you want to include your trained model)
+# *.pt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Temporary files
+temp_*.jpg
+temp_*.png
+*.tmp
